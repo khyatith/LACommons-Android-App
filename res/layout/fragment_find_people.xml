@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    
+    
+   <TextView
+       android:id="@+id/maintext"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:paddingBottom="10dp"
+       android:background="#c00"
+       android:gravity="center"
+       android:text="Trekking LA"
+       android:textColor="#ffffff"
+       android:textSize="20sp"
+       android:textStyle="bold"
+       android:layout_alignParentTop="true"
+        />
+   <TextView
+       android:id="@+id/upcomingtours"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:paddingBottom="10dp"
+       android:background="#cccccc"
+       android:gravity="center"
+       android:text="Upcoming Tours"
+       android:textColor="#000"
+       android:textSize="18sp"
+       android:textStyle="bold"
+      android:paddingTop="10dp"
+       android:layout_below="@+id/maintext"
+        />
+
+   <LinearLayout
+       android:id="@+id/ll1"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/upcomingtours" 
+       android:background="#cccccc">
+
+   <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".5"
+        android:background="#cccccc"
+         />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".5"
+        android:background="#cccccc"
+        />
+    </LinearLayout>
+   <ListView
+       android:id="@+id/list1"
+       android:layout_below="@+id/ll1"
+       android:background="#cccccc"
+       android:layout_height="fill_parent"
+       android:layout_width="fill_parent"
+       android:paddingTop="10dp"
+       />
+
+</RelativeLayout>
