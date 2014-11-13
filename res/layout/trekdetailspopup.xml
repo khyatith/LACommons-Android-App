@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TextView
+        android:id="@+id/trekname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        
+        android:textColor="#fff"
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+       >
+        </TextView>
+        <TextView
+        android:id="@+id/trekdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/trekname"
+        
+        android:layout_marginBottom="20dp"
+        android:textColor="#fff"
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+       >
+        </TextView>
+        <TextView
+        android:id="@+id/trektime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/trekdate"
+      
+        android:layout_marginBottom="20dp"
+        android:textColor="#fff"
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+       >
+        </TextView>
+        <TextView
+        android:id="@+id/trekvenue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/trektime"
+     
+        android:layout_marginBottom="20dp"
+        android:textColor="#fff"
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+       >
+        </TextView>
+         <TextView
+        android:id="@+id/lacommons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/trekvenue"
+      android:text="Look for the LACommons Art Booth!!!!"
+        
+        android:textColor="#fff"
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        
+       >
+        </TextView>
+<Button
+    android:id="@+id/OKButton"
+    android:layout_width="300dp"
+    android:layout_below="@+id/lacommons"
+         android:layout_height="wrap_content"
+         android:background="@drawable/button_layout3"
+         android:text="OK"
+         
+         android:textColor="#000"
+         android:layout_gravity="center"
+         android:layout_centerHorizontal="true"
+         
+         ></Button>
+
+</RelativeLayout>
