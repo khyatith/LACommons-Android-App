@@ -44,13 +44,11 @@
        android:layout_width="fill_parent"
        android:layout_height="wrap_content"
        android:paddingBottom="10dp"
-      
        android:gravity="center"
-       
        android:textColor="#000"
        android:textSize="18sp"
        android:textStyle="bold"
-      android:paddingTop="10dp"
+       android:paddingTop="10dp"
        android:layout_below="@+id/maintext"
         />
       
@@ -59,13 +57,11 @@
        android:layout_width="fill_parent"
        android:layout_height="wrap_content"
        android:paddingBottom="10dp"
-      
        android:gravity="center"
-       
        android:textColor="#000"
        android:textSize="18sp"
        android:textStyle="bold"
-      android:paddingTop="10dp"
+       android:paddingTop="10dp"
        android:layout_below="@+id/upcomingtours"
         />
       
@@ -74,13 +70,11 @@
        android:layout_width="fill_parent"
        android:layout_height="wrap_content"
        android:paddingBottom="10dp"
-      
        android:gravity="center"
-       
        android:textColor="#000"
        android:textSize="18sp"
        android:textStyle="bold"
-      android:paddingTop="10dp"
+       android:paddingTop="10dp"
        android:layout_below="@+id/daymonthyear"
         />
        <TextView
@@ -88,13 +82,11 @@
        android:layout_width="fill_parent"
        android:layout_height="wrap_content"
        android:paddingBottom="10dp"
-      
        android:gravity="center"
-       
        android:textColor="#000"
        android:textSize="18sp"
        android:textStyle="bold"
-      android:paddingTop="10dp"
+       android:paddingTop="10dp"
        android:layout_below="@+id/timings"
         />
         <TextView

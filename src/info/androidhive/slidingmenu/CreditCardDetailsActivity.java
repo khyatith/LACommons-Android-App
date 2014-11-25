@@ -5,10 +5,13 @@ import info.androidhive.slidingmenu.adapter.NavDrawerListAdapter;
 import info.androidhive.slidingmenu.model.NavDrawerItem;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -19,10 +22,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class CreditCardDetailsActivity extends Activity {
@@ -43,56 +51,157 @@ public class CreditCardDetailsActivity extends Activity {
 
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
+	
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.checkout_layout);
+		setContentView(R.layout.creditcardetails_layout);
 		
-		//get Ids
-		final EditText firstname=(EditText) findViewById(R.id.firstname);
-		final EditText lastname=(EditText) findViewById(R.id.lastname);
-		final EditText email=(EditText) findViewById(R.id.email);
-		final EditText contact=(EditText) findViewById(R.id.contact);
+		//populate 3  type spinners
+		Spinner spinner = (Spinner) findViewById(R.id.cardtypespinner);
+	    ArrayAdapter<CharSequence> cardtypeadapter = ArrayAdapter.createFromResource(this, R.array.creditcardtype, android.R.layout.simple_spinner_item);
+	    cardtypeadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    spinner.setAdapter(cardtypeadapter);
+	    
+	    final Spinner monthspinner=(Spinner) findViewById(R.id.expirymonth);
+	    ArrayAdapter<CharSequence> monthadapter= ArrayAdapter.createFromResource(this, R.array.ccexpirymonth,android.R.layout.simple_spinner_item);
+	    monthadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    monthspinner.setAdapter(monthadapter);
+	    
+	    
+	    
+	    Spinner yearspinner=(Spinner) findViewById(R.id.expiryyear);
+	    ArrayAdapter<CharSequence> yearadapter= ArrayAdapter.createFromResource(this, R.array.ccexpiryyear,android.R.layout.simple_spinner_item);
+	    yearadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+	    yearspinner.setAdapter(yearadapter);
+	    
+	    yearspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				final String yearselected=parent.getItemAtPosition(position).toString();
+	
+				monthspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+					@Override
+					public void onItemSelected(AdapterView<?> parent,
+							View view, int position, long id) {
+						// TODO Auto-generated method stub
+					Long monthselected=parent.getItemIdAtPosition(position);
+					Calendar c=Calendar.getInstance();
+					int currentyear=c.get(Calendar.YEAR);
+					int currentmonth=c.get(Calendar.MONTH);
+						if(Integer.parseInt(yearselected)==currentyear)
+						{
+							if(monthselected+1<currentmonth)
+							{
+								Toast.makeText(getApplicationContext(), "Your Credit card is expired!", Toast.LENGTH_SHORT).show();
+							}
+						}
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView<?> parent) {
+						// TODO Auto-generated method stub
+						Toast.makeText(getApplicationContext(), "Please select Credit card expiry month", Toast.LENGTH_SHORT).show();
+						
+					}
+				
+				});
+				
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+				Toast.makeText(getApplicationContext(), "Please select Credit card expiry year", Toast.LENGTH_SHORT).show();
+				
+			}
+	    	
+		});
+	    
+	    
+	    	
 		
-		//button click pass intent to another page
-		final Button continuebutton=(Button) findViewById(R.id.continuebutton);
+	    
+	    
+	    //button click pass intent to another page
+		final Button paynowbutton=(Button) findViewById(R.id.paynowbutton);
         
-        continuebutton.setOnClickListener(new View.OnClickListener() {
+       paynowbutton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				//get Edittext Id
+			    final EditText fname=(EditText) findViewById(R.id.firstname);
+			    final EditText ccnumber=(EditText) findViewById(R.id.ccnumber);
+			    final EditText cvv=(EditText) findViewById(R.id.cvvnumber);
 				//get input value in edittext
-				final String fname=firstname.getText().toString();
-				final String lname=lastname.getText().toString();
-				final String uname=email.getText().toString();
-				final String phonenumber=contact.getText().toString();
-				String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+				
+				String firstname=fname.getText().toString();
+				String ccnum=ccnumber.getText().toString();
+				String cvvnumber=cvv.getText().toString().trim();
+				
+				
 				//validations
 			
-				Log.d("phone number",""+phonenumber.trim().length());
-				Log.d("last name",""+lname.trim().length());
-				Log.d("first name",""+fname.trim().length());
-				Log.d("email",""+uname.trim().length());
+				//Log.d("email",""+email.getText());
 				
-				if(lname.trim().length()==0 || fname.trim().length()==0 || uname.trim().length()==0 || phonenumber.trim().length()==0)
+				if(firstname.trim().length()==0 || ccnum.trim().length()==0 || cvvnumber.trim().length()==0)
 				{
 					Toast.makeText(getApplicationContext(), "all required fields need to be filled", Toast.LENGTH_SHORT).show();
 				}
-				else if(phonenumber.trim().length()>0 && phonenumber.trim().length()<10)
+				else if(ccnum.trim().length()!=16)
 				{
-					Toast.makeText(getApplicationContext(), "Contact Number should be 10 digits long!", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), "Credit card number should be 6 digits long!", Toast.LENGTH_SHORT).show();
+				}
+				else if(cvvnumber.trim().length()!=3)
+				{
+					Toast.makeText(getApplicationContext(), "CVV number should be 3 digits long!", Toast.LENGTH_SHORT).show();
 				}
 				
-				else if(!uname.matches(emailPattern))
-				{
-					Toast.makeText(getApplicationContext(), "Please enter a valid email address in Username field", Toast.LENGTH_SHORT).show();
-				}
+				
 				else
 				{
-				Intent intent=new Intent(CreditCardDetailsActivity.this,CreditCardDetailsActivity.class);
-				startActivity(intent);
+					final Dialog dialog=new Dialog(CreditCardDetailsActivity.this);
+					dialog.setContentView(R.layout.paymentconfirmpopup);
+					dialog.setTitle("Payment Confirmation");
+					WindowManager.LayoutParams lp=dialog.getWindow().getAttributes();
+					lp.dimAmount=0.5f;
+					dialog.getWindow().setAttributes(lp);
+					dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+					
+					//get ids
+					TextView textview1=(TextView) dialog.findViewById(R.id.textview1);
+					TextView textview2=(TextView) dialog.findViewById(R.id.textview2);
+					TextView textview3=(TextView) dialog.findViewById(R.id.textview3);
+					TextView textview4=(TextView) dialog.findViewById(R.id.textview4);
+					TextView textview5=(TextView) dialog.findViewById(R.id.textview5);
+					Button okayButton=(Button) dialog.findViewById(R.id.okayButton);
+ 					
+					textview1.setText("Get your proof of ID and collect your passes from the ticket counter on the day of the event");
+					textview2.setText("For further details,call 213-633-7469");
+					textview3.setText("Your payment has been received");
+					textview4.setText("Confirmation receipt has been mailed to your email-Id");
+					textview5.setText("Thank you !!");
+					
+					
+					dialog.show();
+					
+					okayButton.setOnClickListener(new OnClickListener() {
+						
+						@Override
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+							dialog.dismiss();
+							
+						}
+					});
 				
 			}
 			}

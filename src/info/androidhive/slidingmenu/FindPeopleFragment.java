@@ -4,20 +4,15 @@ import info.androidhive.slidingmenu.database.Customers;
 import info.androidhive.slidingmenu.database.DBHelper;
 import info.androidhive.slidingmenu.database.UpcomingTours;
 import info.androidhive.slidingmenu.TrekDetails;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -47,10 +42,10 @@ public class FindPeopleFragment extends Fragment {
 			Customers c1=new Customers("Khyati","Thakur","khyatith","1234","9311179434");
 			db.createCustomers(c1);
 			//inserting tours in db
-			/*long ut1_id = db.createTours(ut1);
+			long ut1_id = db.createTours(ut1);
 			long ut2_id=db.createTours(ut2);
 			long ut3_id=db.createTours(ut3);
-			long ut4_id=db.createTours(ut4);*/
+			long ut4_id=db.createTours(ut4);
 			
 			//Log.d("Tag Count", "Tag Count: " + db.getAllTours().size());
 			ArrayList<String> display=new ArrayList<String>();

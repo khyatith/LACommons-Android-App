@@ -88,6 +88,20 @@
             android:background="@drawable/rectangle_draw2"
            
             />
+         <TextView
+       android:id="@+id/footertext"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:paddingBottom="10dp"
+       android:background="#404040"
+       android:gravity="center"
+       android:text="Checkout Now!"
+       android:textColor="#ffffff"
+       android:textSize="20sp"
+       android:textStyle="bold"
+       android:layout_alignParentBottom="true"
+       android:clickable="true"
+        />
         
         </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

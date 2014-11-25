@@ -48,4 +48,35 @@
         <item>Cancel</item>
        
     </string-array> 
+    <string-array name="creditcardtype">
+        <item>VISA</item>
+        <item>MASTER CARD</item>
+        <item>AMERICAN EXPRESS</item>
+        <item>DISCOVER</item>
+       
+    </string-array> 
+    <string-array name="ccexpiryyear">
+        <item>2014</item>
+        <item>2015</item>
+        <item>2016</item>
+        <item>2017</item>
+        <item>2018</item>
+        <item>2019</item>
+        <item>2020</item>
+       </string-array> 
+       
+    <string-array name="ccexpirymonth">
+        <item>January</item>
+        <item>Feburary</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+       </string-array> 
 </resources>

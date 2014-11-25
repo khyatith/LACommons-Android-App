@@ -32,6 +32,10 @@
             android:name="info.androidhive.slidingmenu.SignUpActivity" ></activity>
         <activity
             android:name="info.androidhive.slidingmenu.ShoppingCartActivity" ></activity>
+        <activity
+            android:name="info.androidhive.slidingmenu.CheckoutActivity" ></activity>
+        <activity
+            android:name="info.androidhive.slidingmenu.CreditCardDetailsActivity" ></activity>
     </application>
 
 </manifest>

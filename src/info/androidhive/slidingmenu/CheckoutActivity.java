@@ -69,11 +69,11 @@ public class CheckoutActivity extends Activity{
 				String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 				//validations
 			
-				Log.d("phone number",""+phonenumber.trim().length());
+				/*Log.d("phone number",""+phonenumber.trim().length());
 				Log.d("last name",""+lname.trim().length());
 				Log.d("first name",""+fname.trim().length());
-				Log.d("email",""+uname.trim().length());
-				
+				Log.d("email",""+uname);
+				*/
 				if(lname.trim().length()==0 || fname.trim().length()==0 || uname.trim().length()==0 || phonenumber.trim().length()==0)
 				{
 					Toast.makeText(getApplicationContext(), "all required fields need to be filled", Toast.LENGTH_SHORT).show();
@@ -83,7 +83,7 @@ public class CheckoutActivity extends Activity{
 					Toast.makeText(getApplicationContext(), "Contact Number should be 10 digits long!", Toast.LENGTH_SHORT).show();
 				}
 				
-				else if(uname.matches(emailPattern))
+				else if(!uname.matches(emailPattern))
 				{
 					Toast.makeText(getApplicationContext(), "Please enter a valid email address in Username field", Toast.LENGTH_SHORT).show();
 				}

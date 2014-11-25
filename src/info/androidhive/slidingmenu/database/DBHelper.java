@@ -335,6 +335,48 @@ public class DBHelper extends SQLiteOpenHelper {
  return rowsdeleted;
 		
 	}
+	public int updateShoppingCart(int cid,int quan,int finalcost)
+	{
+		ContentValues cv = new ContentValues();
+	    cv.put(TOTAL_QUANTITY, quan);
+	    cv.put(TOTAL_COST,finalcost);
+	    
+	                 /* use COLUMN NAMES here */                     
+	    String where = "CustId = ?";
+	    SQLiteDatabase db = this.getReadableDatabase();
+	                 /* bind VALUES here */
+	    String[] whereArgs ={String.valueOf(cid)};
+	    return db.update(TABLE_SHOPPINGCART, cv, where, whereArgs);
+	    
+	}
+	public List<ShoppingCart> getshoppingItemCost(int sid)
+	{
+		List<ShoppingCart> sc=new ArrayList<ShoppingCart>();
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery("SELECT TotalCost,TotalQuantity FROM ShoppingCart WHERE ShoppingCartId = '"+sid+"'", null);
 	
+		
+		
+		if (c.moveToFirst()) {
+            do {
+                ShoppingCart td = new ShoppingCart();
+              
+               td.setquantity(c.getInt(c.getColumnIndex(TOTAL_QUANTITY)));
+                td.setcost(c.getInt(c.getColumnIndex(TOTAL_COST)));
+               
+                sc.add(td);
+            } while (c.moveToNext());
+        }
+ 
+             return sc;   /*ShoppingCart td = new ShoppingCart();
+                td.setcost(c.getInt(c.getColumnIndex(TOTAL_COST)));
+                //td.setfinaltotalcost(c.getInt(c.getColumnIndex(FINAL_TOTALCOST)));
+                // adding to todo list
+             sc.add(td);
+             return sc;*/
+          
+        }
 	
-}
+	}
+	
+
