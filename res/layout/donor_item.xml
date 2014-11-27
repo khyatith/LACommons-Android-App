@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#ccffcc"
+    android:gravity="center"
+   >
+
+    
+     
+    <EditText
+        android:id="@+id/firstname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center" 
+        android:hint="First Name*"
+        android:background="@drawable/edittext_drawable"
+        android:layout_marginTop="10dp"
+        android:textColor="#000"/>
+    
+    <EditText
+        android:id="@+id/lastname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+       android:gravity="center"
+        android:hint="Last Name*"
+        android:background="@drawable/edittext_drawable"
+        android:layout_marginTop="10dp"
+        android:textColor="#000"/>
+    
+     
+	<EditText
+        android:id="@+id/email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/edittext_drawable"
+        android:layout_marginTop="10dp"
+        android:textColor="#000"
+        android:hint="Email*"/>
+	
+	<EditText
+        android:id="@+id/streetaddr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center"
+        android:inputType="text"
+        android:background="@drawable/edittext_drawable"
+        android:layout_marginTop="10dp"
+        android:textColor="#000"
+        android:hint="Street*"/>
+	
+	<EditText
+        android:id="@+id/city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center"
+        android:inputType="text"
+        android:background="@drawable/edittext_drawable"
+        android:layout_marginTop="10dp"
+        android:textColor="#000"
+        android:hint="City*"/>
+     
+	<EditText
+        android:id="@+id/State"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center"
+        android:inputType="text"
+        android:background="@drawable/edittext_drawable"
+        android:layout_marginTop="10dp"
+        android:textColor="#000"
+        android:hint="State"/>
+	
+	<EditText
+        android:id="@+id/zip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center"
+        android:inputType="text"
+        android:background="@drawable/edittext_drawable"
+        android:layout_marginTop="10dp"
+        android:textColor="#000"
+        android:hint="Zip"/>
+	
+	<EditText
+        android:id="@+id/country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center"
+        android:inputType="text"
+        android:background="@drawable/edittext_drawable"
+        android:layout_marginTop="10dp"
+        android:textColor="#000"
+        android:hint="Country"/>
+	
+	<EditText
+        android:id="@+id/contact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:gravity="center"
+        android:inputType="text"
+        android:background="@drawable/edittext_drawable"
+        android:layout_marginTop="10dp"
+        android:textColor="#000"
+        android:hint="Contact"/>
+
+	<CheckBox
+	    android:id="@+id/checkBox1"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="Billing Information Same as Donor Information" 
+	    android:textColor="#000"
+	    android:gravity="center"
+	    android:layout_marginBottom="10dp"
+	    android:layout_marginTop="10dp"/>
+
+
+	
+     <Button
+         android:id="@+id/savetext1"
+         android:layout_width="150dp"
+         android:layout_height="wrap_content"
+         android:background="@drawable/button_layout5"
+         android:text="Save"
+         android:textColor="#000"
+         android:textStyle="bold"
+         android:layout_marginTop="10dp"
+         android:layout_marginBottom="10dp"
+         android:gravity="center"
+         />
+  
+ 
+</LinearLayout>
