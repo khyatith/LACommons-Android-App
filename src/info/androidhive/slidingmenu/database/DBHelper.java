@@ -6,11 +6,11 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
+
 import android.database.sqlite.SQLiteDatabase;
 
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+
 
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -21,6 +21,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_UPCOMINGTOURS="UpcomingTours"; //table name
     public static final String TABLE_CUSTOMERS="Customers"; // table name
     public static final String TABLE_SHOPPINGCART="ShoppingCart";
+    public static final String TABLE_DONORINFORMATION="DonorInformation";
+    public static final String TABLE_BILLINGINFORMATION="BillingInformation";
+    
     //column names in UpcomingTours
     
     public static final String TOUR_ID="TourId";
@@ -42,13 +45,42 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CUSTOMER_PASSWORD="CustomerPassword";
     public static final String CUSTOMER_CONTACT="CustomerContact";
     
+    
+    
     //column names in shopping cart table
     public static final String SHOPPINGCART_ID="ShoppingCartId";
    public static final String TOTAL_COST="TotalCost";
    public static final String TOTAL_QUANTITY="TotalQuantity";
    public static final String C_ID="CustId";
    public static final String TREK_ID="TrekId";
-   //public static final String FINAL_TOTALCOST="FinalTotalCost";
+   
+   //column names in Donor info table
+   public static final String DONOR_ID="DonorId";
+   public static final String DONOR_FIRSTNAME="DonorFirstName";
+   public static final String DONOR_LASTNAME="DonorLastName";
+   public static final String DONOR_EMAIL="DonorEmail";
+   public static final String DONOR_STREET="DonorStreet";
+   public static final String DONOR_CITY="DonorCity";
+   public static final String DONOR_STATE="DonorState";
+   public static final String DONOR_ZIP="DonorZip";
+   public static final String DONOR_COUNTRY="DonorCountry";
+   public static final String DONOR_CONTACT="DonorContact";
+   public static final String DONOR_CUSTOMERID="DonorCustId";
+   
+   //column names in Billing info table
+   public static final String BILLING_ID="BillingId";
+   public static final String BILLING_FIRSTNAME="BillingFirstName";
+   public static final String BILLING_LASTNAME="BillingLastName";
+   public static final String BILLING_EMAIL="BillingEmail";
+   public static final String BILLING_STREET="BillingStreet";
+   public static final String BILLING_CITY="BillingCity";
+   public static final String BILLING_STATE="BillingState";
+   public static final String BILLING_ZIP="BillingZip";
+   public static final String BILLING_COUNTRY="BillingCountry";
+   public static final String BILLING_CONTACT="BillingContact";
+   public static final String BILLING_CUSTOMERID="BillingCustId";
+   
+   
    
    
 // create table upcomingtours
@@ -64,6 +96,12 @@ public class DBHelper extends SQLiteOpenHelper {
 	
 	private static final String CREATE_TABLE_SHOPPINGCART = "CREATE TABLE IF NOT EXISTS " + TABLE_SHOPPINGCART + "(" + SHOPPINGCART_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + TOTAL_COST + " INTEGER," + TOTAL_QUANTITY + " INTEGER," + C_ID + " INTEGER," + TREK_ID + " INTEGER" + ")";
 	
+	//create table donor information
+	private static final String CREATE_TABLE_DONORINFORMATION = "CREATE TABLE IF NOT EXISTS " + TABLE_DONORINFORMATION + "(" + DONOR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + DONOR_FIRSTNAME + " TEXT," + DONOR_LASTNAME + " TEXT," + DONOR_EMAIL + " TEXT," + DONOR_STREET + " TEXT," + DONOR_CITY + " TEXT," + DONOR_STATE + " TEXT," + DONOR_ZIP + " TEXT," + DONOR_COUNTRY + " TEXT," + DONOR_CONTACT + " TEXT," + DONOR_CUSTOMERID + " INTEGER" + ")";
+	
+	//create table billing information
+	private static final String CREATE_TABLE_BILLINGINFORMATION = "CREATE TABLE IF NOT EXISTS " + TABLE_BILLINGINFORMATION + "(" + BILLING_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + BILLING_FIRSTNAME + " TEXT," + BILLING_LASTNAME + " TEXT," + BILLING_EMAIL + " TEXT," + BILLING_STREET + " TEXT," + BILLING_CITY + " TEXT," + BILLING_STATE + " TEXT," + BILLING_ZIP + " TEXT," + BILLING_COUNTRY + " TEXT," + BILLING_CONTACT + " TEXT," + BILLING_CUSTOMERID + " INTEGER" + ")";
+	
 	public DBHelper(Context context) {
 		super(context, DB_NAME, null, DB_VERSION);
 		// TODO Auto-generated constructor stub
@@ -77,6 +115,8 @@ public class DBHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_TABLE_UPCOMINGTOURS);
 		db.execSQL(CREATE_TABLE_CUSTOMERS);
 		db.execSQL(CREATE_TABLE_SHOPPINGCART);
+		db.execSQL(CREATE_TABLE_DONORINFORMATION);
+		db.execSQL(CREATE_TABLE_BILLINGINFORMATION);
 		
 	}
 	
@@ -88,6 +128,8 @@ public class DBHelper extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_UPCOMINGTOURS);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_CUSTOMERS);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SHOPPINGCART);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_DONORINFORMATION);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_BILLINGINFORMATION);
 		onCreate(db);
 		
 	}
@@ -248,6 +290,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 td.setcustomerid(c.getInt((c.getColumnIndex(CUSTOMER_ID))));
                 td.setcustomerfirstname((c.getString(c.getColumnIndex(CUSTOMER_FIRSTNAME))));
                td.setcustomerlastname(c.getString(c.getColumnIndex(CUSTOMER_LASTNAME)));
+               td.setcustomercontact(c.getString(c.getColumnIndex(CUSTOMER_CONTACT)));
+               
                 
                 // adding to todo list
                 customers.add(td);
@@ -328,7 +372,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 	public int RemoveItemFromCart(int sid)
 	{
-		List<ShoppingCart> sc = new ArrayList<ShoppingCart>();
+		//List<ShoppingCart> sc = new ArrayList<ShoppingCart>();
 		SQLiteDatabase db = this.getReadableDatabase();
 		int rowsdeleted=db.delete(TABLE_SHOPPINGCART, SHOPPINGCART_ID+"="+sid, null);
 		
@@ -368,15 +412,183 @@ public class DBHelper extends SQLiteOpenHelper {
             } while (c.moveToNext());
         }
  
-             return sc;   /*ShoppingCart td = new ShoppingCart();
-                td.setcost(c.getInt(c.getColumnIndex(TOTAL_COST)));
-                //td.setfinaltotalcost(c.getInt(c.getColumnIndex(FINAL_TOTALCOST)));
-                // adding to todo list
-             sc.add(td);
-             return sc;*/
+             return sc;   
           
         }
+	public int updateCustomerRecord(int cid,String cfirstname, String clastname,String ccontact )
+	{
+		ContentValues cv = new ContentValues();
+	    cv.put(CUSTOMER_FIRSTNAME, cfirstname);
+	    cv.put(CUSTOMER_LASTNAME,clastname);
+	    cv.put(CUSTOMER_CONTACT, ccontact);
+	   // cv.put(CUSTOMER_USERNAME, cusername);
+	    
+	    String where = "CustomerId = ?";
+	    SQLiteDatabase db = this.getReadableDatabase();
+	              
+	    String[] whereArgs ={String.valueOf(cid)};
+	    return db.update(TABLE_CUSTOMERS, cv, where, whereArgs);
+	    
+	}
 	
+	public long createDonorInformation(DonorInformation di) {
+	    SQLiteDatabase db = this.getWritableDatabase();
+	 
+	    ContentValues values = new ContentValues();
+	    //values.put(CUSTOMER_ID, customers.customerid);
+	   
+	    values.put(DONOR_FIRSTNAME, di.getdonorfirstname());
+	    values.put(DONOR_LASTNAME, di.getdonorlastname());
+	    values.put(DONOR_STREET, di.getdonorstreet());
+	    values.put(DONOR_CITY, di.getdonorcity());
+	    values.put(DONOR_STATE, di.getdonorstate());
+	    values.put(DONOR_ZIP, di.getdonorzip());
+	    values.put(DONOR_COUNTRY, di.getdonorcountry());
+	    values.put(DONOR_EMAIL, di.getdonoremail());
+	    values.put(DONOR_CONTACT, di.getdonorcontact());
+	    values.put(DONOR_CUSTOMERID, di.getdonorcustid());
+	   
+	   // insert row
+	    long donor_id = db.insert(TABLE_DONORINFORMATION, null, values);
+	    return donor_id;
+	}
+	
+	public List<DonorInformation> getDonorInformation(int custid)
+	{
+		List<DonorInformation> tours = new ArrayList<DonorInformation>();
+		SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM DonorInformation WHERE DonorCustId = '"+custid+"'", null);
+        
+        if (c.moveToFirst()) {
+            do {
+                DonorInformation td = new DonorInformation();
+                td.setdonorid(c.getInt(c.getColumnIndex(DONOR_ID)));
+                td.setdonorfirstname(c.getString(c.getColumnIndex(DONOR_FIRSTNAME)));
+                td.setdonorlastname(c.getString(c.getColumnIndex(DONOR_LASTNAME)));
+                td.setdonorstreet(c.getString(c.getColumnIndex(DONOR_STREET)));
+                td.setdonorcity(c.getString(c.getColumnIndex(DONOR_CITY)));
+                td.setdonorstate(c.getString((c.getColumnIndex(DONOR_STATE))));
+                td.setdonorzip(c.getString((c.getColumnIndex(DONOR_ZIP))));
+                td.setdonorcountry(c.getString(c.getColumnIndex(DONOR_COUNTRY)));
+                td.setdonoremail(c.getString(c.getColumnIndex(DONOR_EMAIL)));
+                td.setdonorcontact(c.getString(c.getColumnIndex(DONOR_CONTACT)));
+                
+                // adding to todo list
+                tours.add(td);
+        
+            } while (c.moveToNext());
+        }
+        else
+        {
+        	tours=null;
+        }
+        
+        
+ 
+        return tours;
+		
+	}
+	public int updateDonorRecord(int custid, String firstname,String lastname,String street, String city,String state, String zip, String country, String email,String contact  )
+	{
+		ContentValues cv = new ContentValues();
+		
+	    cv.put(DONOR_FIRSTNAME,firstname);
+	    cv.put(DONOR_LASTNAME,lastname);
+	    cv.put(DONOR_STREET, street);
+	    cv.put(DONOR_CITY, city);
+	    cv.put(DONOR_STATE, state);
+	    cv.put(DONOR_ZIP, zip);
+	    cv.put(DONOR_COUNTRY, country);
+	    cv.put(DONOR_EMAIL, email);
+	    cv.put(DONOR_CONTACT, contact);
+	    
+	    String where = "DonorCustId = ?";
+	    SQLiteDatabase db = this.getReadableDatabase();
+	              
+	    String[] whereArgs ={String.valueOf(custid)};
+	    return db.update(TABLE_DONORINFORMATION, cv, where, whereArgs);
+	    
+	}
+	
+	public long createBillingInformation(BillingInformation bi) {
+	    SQLiteDatabase db = this.getWritableDatabase();
+	 
+	    ContentValues values = new ContentValues();
+	    //values.put(CUSTOMER_ID, customers.customerid);
+	   
+	    values.put(BILLING_FIRSTNAME, bi.getbillingfirstname());
+	    values.put(BILLING_LASTNAME, bi.getbillinglastname());
+	    values.put(BILLING_STREET, bi.getbillingstreet());
+	    values.put(BILLING_CITY, bi.getbillingcity());
+	    values.put(BILLING_STATE, bi.getbillingstate());
+	    values.put(BILLING_ZIP, bi.getbillingzip());
+	    values.put(BILLING_COUNTRY, bi.getbillingcountry());
+	    values.put(BILLING_EMAIL, bi.getbillingemail());
+	    values.put(BILLING_CONTACT, bi.getbillingcontact());
+	    values.put(BILLING_CUSTOMERID, bi.getbillingcustid());
+	   
+	   // insert row
+	    long billing_id = db.insert(TABLE_BILLINGINFORMATION, null, values);
+	    return billing_id;
+	}
+	
+	public List<BillingInformation> getBillingInformation(int custid)
+	{
+		List<BillingInformation> tours = new ArrayList<BillingInformation>();
+		SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT * FROM BillingInformation WHERE BillingCustId = '"+custid+"'", null);
+        
+        if (c.moveToFirst()) {
+            do {
+                BillingInformation td = new BillingInformation();
+                td.setbillingid(c.getInt(c.getColumnIndex(BILLING_ID)));
+                td.setbillingfirstname(c.getString(c.getColumnIndex(BILLING_FIRSTNAME)));
+                td.setbillinglastname(c.getString(c.getColumnIndex(BILLING_LASTNAME)));
+                td.setbillingstreet(c.getString(c.getColumnIndex(BILLING_STREET)));
+                td.setbillingcity(c.getString(c.getColumnIndex(BILLING_CITY)));
+                td.setbillingstate(c.getString((c.getColumnIndex(BILLING_STATE))));
+                td.setbillingzip(c.getString((c.getColumnIndex(BILLING_ZIP))));
+                td.setbillingcountry(c.getString(c.getColumnIndex(BILLING_COUNTRY)));
+                td.setbillingemail(c.getString(c.getColumnIndex(BILLING_EMAIL)));
+                td.setbillingcontact(c.getString(c.getColumnIndex(BILLING_CONTACT)));
+                
+                // adding to todo list
+                tours.add(td);
+        
+            } while (c.moveToNext());
+        }
+        else
+        {
+        	tours=null;
+        }
+        
+        
+ 
+        return tours;
+		
+	}
+	
+	public int updateBillingRecord(int custid, String firstname,String lastname,String street, String city,String state, String zip, String country, String email,String contact  )
+	{
+		ContentValues cv = new ContentValues();
+		
+	    cv.put(BILLING_FIRSTNAME,firstname);
+	    cv.put(BILLING_LASTNAME,lastname);
+	    cv.put(BILLING_STREET, street);
+	    cv.put(BILLING_CITY, city);
+	    cv.put(BILLING_STATE, state);
+	    cv.put(BILLING_ZIP, zip);
+	    cv.put(BILLING_COUNTRY, country);
+	    cv.put(BILLING_EMAIL, email);
+	    cv.put(BILLING_CONTACT, contact);
+	    
+	    String where = "BillingCustId = ?";
+	    SQLiteDatabase db = this.getReadableDatabase();
+	              
+	    String[] whereArgs ={String.valueOf(custid)};
+	    return db.update(TABLE_BILLINGINFORMATION, cv, where, whereArgs);
+	    
+	}
 	}
 	
 

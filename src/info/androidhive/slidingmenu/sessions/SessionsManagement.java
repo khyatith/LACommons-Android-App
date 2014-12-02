@@ -1,10 +1,8 @@
 package info.androidhive.slidingmenu.sessions;
 
+
 import info.androidhive.slidingmenu.LoginActivity;
-
 import java.util.HashMap;
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -91,17 +89,20 @@ public class SessionsManagement {
             // Clearing all data from Shared Preferences
             editor.clear();
             editor.commit();
-             
+         
+			 // TODO Add extras or a data URI to this intent as appropriate.
+            
+			
             // After logout redirect user to Loing Activity
-            Intent i = new Intent(_context, LoginActivity.class);
+            //Intent i = new Intent(_context, LoginActivity.class);
             // Closing all the Activities
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
              
             // Add new Flag to start new Activity
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
              
             // Staring Login Activity
-            _context.startActivity(i);
+            //_context.startActivity(i);
         }
          
     }

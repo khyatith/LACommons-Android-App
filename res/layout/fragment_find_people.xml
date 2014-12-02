@@ -16,8 +16,10 @@
        android:textColor="#ffffff"
        android:textSize="20sp"
        android:textStyle="bold"
-       android:layout_alignParentTop="true"
+       
         />
+  
+   
    <TextView
        android:id="@+id/upcomingtours"
        android:layout_width="fill_parent"
@@ -64,5 +66,17 @@
        android:layout_width="fill_parent"
        android:paddingTop="10dp"
        />
+
+   <Button
+       android:id="@+id/shoppingicon"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignBottom="@+id/maintext"
+       android:layout_alignParentRight="true"
+      	android:background="#99cc00"
+       android:text="View Cart"
+       android:textColor="#ffffff"
+       android:textSize="12sp"
+       android:textStyle="bold" />
 
 </RelativeLayout>

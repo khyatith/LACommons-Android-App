@@ -1,20 +1,19 @@
 package info.androidhive.slidingmenu.adapter;
 
 import info.androidhive.slidingmenu.R;
+import info.androidhive.slidingmenu.database.BillingInformation;
 import info.androidhive.slidingmenu.database.Customers;
 import info.androidhive.slidingmenu.database.DBHelper;
 import info.androidhive.slidingmenu.database.DonorInformation;
-import info.androidhive.slidingmenu.database.ShoppingCart;
-import info.androidhive.slidingmenu.database.UpcomingTours;
+
 import info.androidhive.slidingmenu.sessions.SessionsManagement;
-import info.androidhive.slidingmenu.sessions.UserCustomAdapter;
+
 
 import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
-import android.graphics.Typeface;
-import android.renderscript.Element;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -24,33 +23,27 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
+
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter implements TextWatcher {
 
-	private TextWatcher tw;
+	
 	private Context context;
-	private List<String> listDataHeader;
-	private HashMap<String,List<String>> listDataChild;
+	
 	LayoutInflater layoutInflater;
 	DBHelper db;
 	int customerid=0;
 	int donorid=0;
+	int billingid=0;
 	
 	 public ExpandableListAdapter(Context context, LayoutInflater layoutInflater) {
 	        this.context = context;
 	        this.layoutInflater = layoutInflater;
 	        db=new DBHelper(context);
 	    }
-	public ExpandableListAdapter(Context context, List<String> listDataHeader,
-            HashMap<String, List<String>> listChildData) {
-        this.context = context;
-        this.listDataHeader = listDataHeader;
-        this.listDataChild = listChildData;
-    }
 	
 	@Override
 	public int getGroupCount() {
@@ -166,7 +159,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter implements 
         }
         	else
         	{
-        		Toast.makeText(context, "You are not logged in!", Toast.LENGTH_SHORT).show();
+        		Toast.makeText(context, "You cannot edit this information unless you are logged in!", Toast.LENGTH_SHORT).show();
+        		txtfirstname.setKeyListener(null);
+        		txtlastname.setKeyListener(null);
+        		txtcontact.setKeyListener(null);
         		
         	}
         
@@ -233,7 +229,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter implements 
     		final EditText country=(EditText) v.findViewById(R.id.country);
     		final EditText contact=(EditText) v.findViewById(R.id.contact);
     		Button savebutton=(Button) v.findViewById(R.id.savetext1);
-    		CheckBox checkBox1=(CheckBox) v.findViewById(R.id.checkBox1);
+    		//CheckBox checkBox1=(CheckBox) v.findViewById(R.id.checkBox1);
     		
         	final SessionsManagement sm=new SessionsManagement(context);
         	
@@ -254,7 +250,16 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter implements 
             }
             	else
             	{
-            		Toast.makeText(context, "You are not logged in!", Toast.LENGTH_SHORT).show();
+            		Toast.makeText(context, "You cannot edit this information unless you are logged in!", Toast.LENGTH_SHORT).show();
+            		firstname.setKeyListener(null);
+            		lastname.setKeyListener(null);
+            		email.setKeyListener(null);
+            		streetaddr.setKeyListener(null);
+            		city.setKeyListener(null);
+            		State.setKeyListener(null);
+            		zip.setKeyListener(null);
+            		country.setKeyListener(null);
+            		contact.setKeyListener(null);
             		
             	}
             if(customerid!=0)
@@ -343,6 +348,153 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter implements 
 								int updateddonor=db.updateDonorRecord(customerid, donorfname, donorlname, donorstreet, donorcity, donorstate, donorzip, donorcountry, donoremail, donorcontact);
 								Log.d("updateddonor",""+updateddonor); 
 								if(updateddonor>=1)
+								 {
+									 
+								 ExpandableListAdapter.this.notifyDataSetChanged();
+								 Toast.makeText(context, "Your records have been updated!", Toast.LENGTH_SHORT).show();
+								 }
+							}
+							
+						}
+            			 
+            		 });
+            	}
+            }
+        }
+        
+        if(groupPosition==2)
+        {
+        	v = View.inflate(context, R.layout.donor_item, null);
+        	
+        	final EditText firstname=(EditText) v.findViewById(R.id.firstname);
+    		final EditText lastname=(EditText) v.findViewById(R.id.lastname);
+    		final EditText email=(EditText) v.findViewById(R.id.email);
+    		final EditText streetaddr=(EditText) v.findViewById(R.id.streetaddr);
+    		final EditText city=(EditText) v.findViewById(R.id.city);
+    		final EditText State=(EditText) v.findViewById(R.id.State);
+    		final EditText zip=(EditText) v.findViewById(R.id.zip);
+    		final EditText country=(EditText) v.findViewById(R.id.country);
+    		final EditText contact=(EditText) v.findViewById(R.id.contact);
+    		Button savebutton=(Button) v.findViewById(R.id.savetext1);
+    		//CheckBox checkBox1=(CheckBox) v.findViewById(R.id.checkBox1);
+    		
+        	final SessionsManagement sm=new SessionsManagement(context);
+        	
+            if(sm.isLoggedIn())
+            {
+            	
+            	HashMap<String, String> custid=sm.getUserDetails();
+    			String loggedinusername=custid.get(SessionsManagement.KEY_NAME);
+    			String  loggedinpassword=custid.get(SessionsManagement.KEY_PASSWORD);
+    			//Log.d("loggedinusername",loggedinusername);
+    			//Log.d("loggedinpassword",loggedinpassword);
+            	List<Customers> customer=db.getLoggedInCustomerId(loggedinusername, loggedinpassword);
+            	for(Customers tags : customer)
+            	{
+            	
+            		customerid=tags.getcustomerid();
+            	}
+            }
+            	else
+            	{
+            		Toast.makeText(context, "You cannot edit this information unless you are logged in!", Toast.LENGTH_SHORT).show();
+            		firstname.setKeyListener(null);
+            		lastname.setKeyListener(null);
+            		email.setKeyListener(null);
+            		streetaddr.setKeyListener(null);
+            		city.setKeyListener(null);
+            		State.setKeyListener(null);
+            		zip.setKeyListener(null);
+            		country.setKeyListener(null);
+            		contact.setKeyListener(null);
+            		
+            	}
+            if(customerid!=0)
+            {
+            	List<BillingInformation> billing=db.getBillingInformation(customerid);
+            	
+            	if(billing==null)
+            	{
+            		//Toast.makeText(context, "please provide donor information", Toast.LENGTH_SHORT).show();
+            		
+            		savebutton.setOnClickListener(new OnClickListener()
+           		 {
+
+						@Override
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+							//Log.d("donor id",""+donorid);
+							String billingfname=firstname.getText().toString();
+							String billinglname=lastname.getText().toString();
+							String billingemail=email.getText().toString();
+							String billingstreet=streetaddr.getText().toString();
+							String billingcity=city.getText().toString();
+							String billingstate=State.getText().toString();
+							String billingzip=zip.getText().toString();
+							String billingcountry=country.getText().toString();
+							String billingcontact=contact.getText().toString();
+							
+						
+							
+							if(billingfname!=null || billinglname!=null || billingemail!=null || billingstreet!=null || billingcity!=null || billingstate!=null || billingzip!=null || billingcountry!=null || billingcontact!=null)
+							{
+								BillingInformation billinginfo=new BillingInformation(customerid,billingfname,billinglname,billingstreet,billingcity,billingstate,billingzip,billingcountry,billingemail,billingcontact);
+								Long createdbillingid=db.createBillingInformation(billinginfo);
+								
+								if(createdbillingid!=-1)
+								 {
+									 
+								 ExpandableListAdapter.this.notifyDataSetChanged();
+								 Toast.makeText(context, "Your records have been Inserted!", Toast.LENGTH_SHORT).show();
+								 }
+							}
+							
+						}
+           			 
+           		 });
+            	}
+            	else
+            	{
+            		
+            		
+            		for(BillingInformation tags:billing)
+            		{
+            			firstname.setText(tags.getbillingfirstname());
+            			lastname.setText(tags.getbillinglastname());
+            			email.setText(tags.getbillingemail());
+            			streetaddr.setText(tags.getbillingstreet());
+            			city.setText(tags.getbillingcity());
+            			State.setText(tags.getbillingstate());
+            			zip.setText(tags.getbillingzip());
+            			country.setText(tags.getbillingcountry());
+            			contact.setText(tags.getbillingcontact());
+            			billingid=tags.getbillingid();
+            			
+            			
+            		}
+            	
+            		 savebutton.setOnClickListener(new OnClickListener()
+            		 {
+
+						@Override
+						public void onClick(View v) {
+							// TODO Auto-generated method stub
+							Log.d("billing id",""+billingid);
+							String billingfname=firstname.getText().toString();
+							String billinglname=lastname.getText().toString();
+							String billingemail=email.getText().toString();
+							String billingstreet=streetaddr.getText().toString();
+							String billingcity=city.getText().toString();
+							String billingstate=State.getText().toString();
+							String billingzip=zip.getText().toString();
+							String billingcountry=country.getText().toString();
+							String billingcontact=contact.getText().toString();
+							
+							if(billingfname!=null || billinglname!=null || billingemail!=null || billingstreet!=null || billingcity!=null || billingstate!=null || billingzip!=null || billingcountry!=null || billingcontact!=null)
+							{
+								int updatedbilling=db.updateBillingRecord(customerid, billingfname, billinglname, billingstreet, billingcity, billingstate, billingzip, billingcountry, billingemail, billingcontact);
+								Log.d("updatedbilling",""+updatedbilling); 
+								if(updatedbilling>=1)
 								 {
 									 
 								 ExpandableListAdapter.this.notifyDataSetChanged();

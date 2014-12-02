@@ -28,9 +28,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.text.InputFilter.LengthFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -46,6 +48,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Toast;
 
 public class ShoppingCartActivity extends Activity {
 	private DrawerLayout mDrawerLayout;
@@ -69,11 +72,13 @@ public class ShoppingCartActivity extends Activity {
 	private NavDrawerListAdapter adapter;
 	ArrayList<User> userArray = new ArrayList<User>();
 	
-
+	
 	 protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.shoppingcart_layout);
-		
+		final ListView list=(ListView) findViewById(R.id.shoplist) ;
+		final TextView totalamounttextview=(TextView) findViewById(R.id.totalamounttextview);
+		final TextView checkout=(TextView) findViewById(R.id.footertext);
 		
 		final DBHelper db= new DBHelper(getApplicationContext());
 		ArrayList<String> display=new ArrayList<String>();
@@ -81,11 +86,16 @@ public class ShoppingCartActivity extends Activity {
 		int cid=extras.getInt("customerid");
 		String combine="";
 		List<ShoppingCart> allTags= db.getCartDetails(cid);
-		final ListView list=(ListView) findViewById(R.id.shoplist) ;
-		final TextView totalamounttextview=(TextView) findViewById(R.id.totalamounttextview);
+		if(allTags.isEmpty())
+		{
+			//Toast.makeText(getApplicationContext(), "You have no items in your shoppingcart !", Toast.LENGTH_SHORT).show();
+			totalamounttextview.setBackgroundColor(Color.WHITE);
+			totalamounttextview.setText("You have no items in you shoppingcart!");
+			checkout.setClickable(false);
+		}
+		else
+		{
 		
-		
-	
 		int totalcost=0;
 		for(ShoppingCart tag : allTags) {
 	    
@@ -144,7 +154,7 @@ public class ShoppingCartActivity extends Activity {
 						
 					}
 				});
-     
+		}
 		mTitle = mDrawerTitle = getTitle();
 
 		// load slide menu items
@@ -167,11 +177,11 @@ public class ShoppingCartActivity extends Activity {
 		// Photos
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
 		// Communities, Will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
+		/*navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
 		// Pages
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
 		// What's hot, We  will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));*/
 		
 
 		// Recycle the typed array

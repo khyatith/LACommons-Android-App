@@ -1,12 +1,15 @@
 package info.androidhive.slidingmenu;
 
-import info.androidhive.slidingmenu.MainActivity.SlideMenuClickListener;
+
 import info.androidhive.slidingmenu.adapter.NavDrawerListAdapter;
+import info.androidhive.slidingmenu.database.Customers;
 import info.androidhive.slidingmenu.database.DBHelper;
 import info.androidhive.slidingmenu.database.UpcomingTours;
 import info.androidhive.slidingmenu.model.NavDrawerItem;
+import info.androidhive.slidingmenu.sessions.SessionsManagement;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
@@ -24,8 +27,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TrekDescription extends Activity {
 	
@@ -45,18 +50,51 @@ public class TrekDescription extends Activity {
 
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
-
+	int customerid=0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.trekdescription_layout);
-
+		Button shoppingicon =(Button) findViewById(R.id.shoppingicon);
 		Intent intent=getIntent();
 		String nameoftrek=intent.getStringExtra("nameoftrek");
 		TextView nameoftrektext=(TextView) findViewById(R.id.nameofevent);
 		 nameoftrektext.setText(nameoftrek);
-		DBHelper db;
+		final DBHelper db;
 		db = new DBHelper(getApplicationContext());
+		final SessionsManagement sm=new SessionsManagement(getApplicationContext());
+		shoppingicon.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				if(sm.isLoggedIn())
+					
+				{
+					HashMap<String, String> custid=sm.getUserDetails();
+					String loggedinusername=custid.get(SessionsManagement.KEY_NAME);
+					String  loggedinpassword=custid.get(SessionsManagement.KEY_PASSWORD);
+					
+		        	List<Customers> customer=db.getLoggedInCustomerId(loggedinusername, loggedinpassword);
+		        	for(Customers tags : customer)
+		        	{
+		        	
+		        		customerid=tags.getcustomerid();
+		        	}
+				Intent i=new Intent(TrekDescription.this,ShoppingCartActivity.class);
+				i.putExtra("customerid", customerid);
+				startActivity(i);
+				
+			}
+				else
+				{
+					Toast.makeText(getApplicationContext(), "Please Login to access your shopping cart!",Toast.LENGTH_SHORT).show();
+				}
+			
+				
+			}
+		});
+		
 		 List<UpcomingTours> allTags = db.getTourDetails(nameoftrek);
 		 for (UpcomingTours tag : allTags) {
 			
@@ -88,11 +126,11 @@ public class TrekDescription extends Activity {
 		// Photos
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
 		// Communities, Will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
+		/*navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
 		// Pages
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
 		// What's hot, We  will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));*/
 		
 
 		// Recycle the typed array

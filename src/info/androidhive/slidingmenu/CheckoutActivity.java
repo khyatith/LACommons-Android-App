@@ -2,8 +2,15 @@ package info.androidhive.slidingmenu;
 
 
 import info.androidhive.slidingmenu.adapter.NavDrawerListAdapter;
+import info.androidhive.slidingmenu.database.Customers;
+import info.androidhive.slidingmenu.database.DBHelper;
 import info.androidhive.slidingmenu.model.NavDrawerItem;
+import info.androidhive.slidingmenu.sessions.SessionsManagement;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -41,20 +48,56 @@ public class CheckoutActivity extends Activity{
 
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
+	int customerid=0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.checkout_layout);
-		
+		final DBHelper db;
+	     
+		 db = new DBHelper(getApplicationContext());
 		//get Ids
 		final EditText firstname=(EditText) findViewById(R.id.firstname);
 		final EditText lastname=(EditText) findViewById(R.id.lastname);
 		final EditText email=(EditText) findViewById(R.id.email);
 		final EditText contact=(EditText) findViewById(R.id.contact);
-		
+		Button shoppingicon =(Button) findViewById(R.id.shoppingicon);
 		//button click pass intent to another page
 		final Button continuebutton=(Button) findViewById(R.id.continuebutton);
+		final SessionsManagement sm=new SessionsManagement(getApplicationContext());
+		
+		 shoppingicon.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					if(sm.isLoggedIn())
+						
+					{
+						HashMap<String, String> custid=sm.getUserDetails();
+						String loggedinusername=custid.get(SessionsManagement.KEY_NAME);
+						String  loggedinpassword=custid.get(SessionsManagement.KEY_PASSWORD);
+						
+			        	List<Customers> customer=db.getLoggedInCustomerId(loggedinusername, loggedinpassword);
+			        	for(Customers tags : customer)
+			        	{
+			        	
+			        		customerid=tags.getcustomerid();
+			        	}
+					Intent i=new Intent(CheckoutActivity.this,ShoppingCartActivity.class);
+					i.putExtra("customerid", customerid);
+					startActivity(i);
+					
+				}
+					else
+					{
+						Toast.makeText(getApplicationContext(), "Please Login to access your shopping cart!",Toast.LENGTH_SHORT).show();
+					}
+				
+					
+				}
+			});
         
         continuebutton.setOnClickListener(new View.OnClickListener() {
 			
@@ -118,11 +161,11 @@ public class CheckoutActivity extends Activity{
 		// Photos
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
 		// Communities, Will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
+		/*navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
 		// Pages
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
 		// What's hot, We  will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));*/
 		
 
 		// Recycle the typed array

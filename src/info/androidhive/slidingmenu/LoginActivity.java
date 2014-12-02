@@ -77,6 +77,10 @@ public class LoginActivity extends Activity {
 					//login,put username and password in shared preference and and go to previous activity
 					
 				    sm.createLoginSession(eusername, epassword);
+				    
+				    Intent resultIntent = new Intent();
+				 // TODO Add extras or a data URI to this intent as appropriate.
+				    setResult(Activity.RESULT_OK, resultIntent);
 				    finish();
 					
 					//Log.d("user details",sm.getUserDetails().toString());
@@ -175,11 +179,11 @@ public class LoginActivity extends Activity {
 		// Photos
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
 		// Communities, Will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
+		/*navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
 		// Pages
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
 		// What's hot, We  will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));*/
 		
 
 		// Recycle the typed array

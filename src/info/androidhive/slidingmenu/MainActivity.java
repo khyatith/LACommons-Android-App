@@ -64,11 +64,11 @@ public class MainActivity extends Activity {
 		// Photos
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
 		// Communities, Will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
+		/*navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
 		// Pages
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
 		// What's hot, We  will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));*/
 		
 
 		// Recycle the typed array
@@ -163,22 +163,22 @@ public class MainActivity extends Activity {
 		// update the main content by replacing fragments
 		Fragment fragment = null;
 		switch (position) {
-		case 0:
+		/*case 0:
 			fragment = new HomeFragment();
-			break;
-		case 1:
+			break;*/
+		case 0:
 			fragment = new FindPeopleFragment();
 			break;
-		case 2:
-			fragment = new PhotosFragment();
+		case 1:
+			fragment = new HomeFragment();
 			break;
-		case 3:
+		case 2:
 			fragment = new CommunityFragment();
 			break;
-		case 4:
+		case 3:
 			fragment = new PagesFragment();
 			break;
-		case 5:
+		case 4:
 			fragment = new WhatsHotFragment();
 			break;
 

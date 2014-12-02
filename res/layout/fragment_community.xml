@@ -1,21 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#cccccc">
     
-    <TextView
-        android:id="@+id/txtLabel"
-         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textSize="16dp"
-        android:text="Communities View"/>
-    
-    <ImageView android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtLabel"
-        android:src="@drawable/ic_communities"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"/>    
+     <TextView
+       android:id="@+id/maintext"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:paddingBottom="10dp"
+       android:background="#c00"
+       android:gravity="center"
+       android:text="My Account"
+       android:textColor="#ffffff"
+       android:textSize="20sp"
+       android:textStyle="bold"
+       android:layout_alignParentTop="true"
+        />
+  <Button
+      android:id="@+id/loginbutton"
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent"
+      android:background="@drawable/button_layout6"
+      android:text="LogIn"
+      android:gravity="center" 
+      android:layout_centerHorizontal="true"
+      android:layout_centerVertical="true"
+      android:textColor="#000000"
+      android:textStyle="bold"
+      />  
+      
+   <Button
+      android:id="@+id/Singupbutton"
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent"
+      android:background="@drawable/button_layout6"
+      android:layout_below="@+id/loginbutton"
+      android:text="SingUp"
+      android:gravity="center" 
+      android:layout_centerHorizontal="true"
+      android:layout_centerVertical="true"
+      android:textColor="#000000"
+      android:textStyle="bold"
+      android:layout_marginTop="10dp"
+      />  
+     
 
 </RelativeLayout>

@@ -41,6 +41,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -63,7 +64,7 @@ public class TrekDetails extends Activity{
 
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private NavDrawerListAdapter adapter;
-
+	int customerid=0;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.trekdetails_layout);
@@ -74,6 +75,7 @@ public class TrekDetails extends Activity{
 		TextView tv=(TextView) findViewById(R.id.upcomingtours);
 		tv.setText(nameoftrek[0]);
 		final SessionsManagement sm=new SessionsManagement(getApplicationContext());
+		Button shoppingicon =(Button) findViewById(R.id.shoppingicon);
 		
 		final DBHelper db;
 	     
@@ -102,6 +104,37 @@ public class TrekDetails extends Activity{
 	        	//TextView cost=(TextView) findViewById(R.id.cost);
 	        	cost.setText("Cost\t:\t\t$"+tag.getcost());
 	        }
+	        shoppingicon.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					if(sm.isLoggedIn())
+						
+					{
+						HashMap<String, String> custid=sm.getUserDetails();
+						String loggedinusername=custid.get(SessionsManagement.KEY_NAME);
+						String  loggedinpassword=custid.get(SessionsManagement.KEY_PASSWORD);
+						
+			        	List<Customers> customer=db.getLoggedInCustomerId(loggedinusername, loggedinpassword);
+			        	for(Customers tags : customer)
+			        	{
+			        	
+			        		customerid=tags.getcustomerid();
+			        	}
+					Intent i=new Intent(TrekDetails.this,ShoppingCartActivity.class);
+					i.putExtra("customerid", customerid);
+					startActivity(i);
+					
+				}
+					else
+					{
+						Toast.makeText(context, "Please Login to access your shopping cart!",Toast.LENGTH_SHORT).show();
+					}
+				
+					
+				}
+			});
 	        Button knowmorebutton=(Button) findViewById(R.id.knowmorebutton);
 	        final Button bookticketsbutton=(Button) findViewById(R.id.bookticketsbutton);
 	        
@@ -288,11 +321,11 @@ public class TrekDetails extends Activity{
 		// Photos
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
 		// Communities, Will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
+		/*navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
 		// Pages
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
 		// What's hot, We  will add a counter here
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
+		navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));*/
 		
 
 		// Recycle the typed array

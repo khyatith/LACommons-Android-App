@@ -4,8 +4,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="#ccffcc"
+    android:gravity="center"
    >
 
+    
+     
     <EditText
         android:id="@+id/firstnametext"
         android:layout_width="wrap_content"
@@ -13,10 +16,11 @@
         android:ems="10"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" 
+        android:gravity="center" 
         android:hint="First Name"
         android:background="@drawable/edittext_drawable"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:textColor="#000"/>
     
     <EditText
         android:id="@+id/lastnametext"
@@ -25,36 +29,25 @@
         android:ems="10"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" 
+       android:gravity="center"
         android:hint="Last Name"
         android:background="@drawable/edittext_drawable"
-        android:layout_marginTop="10dp"/>
-    
-     <EditText
-        android:id="@+id/emailtext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:paddingTop="5dp"
-        android:paddingBottom="5dp"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" 
-        android:hint="Email"
-        android:background="@drawable/edittext_drawable"
         android:layout_marginTop="10dp"
-        android:inputType="textEmailAddress"/>
+        android:textColor="#000"/>
+    
      
-     <EditText
-        android:id="@+id/phonetext"
+	<EditText
+        android:id="@+id/contacttext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" 
+        android:gravity="center"
         android:hint="Contact"
         android:background="@drawable/edittext_drawable"
         android:layout_marginTop="10dp"
-        android:inputType="phone"/>
+        android:textColor="#000"/>
      
      <Button
          android:id="@+id/savetext"
@@ -65,6 +58,8 @@
          android:textColor="#000"
          android:textStyle="bold"
          android:layout_marginTop="10dp"
+         android:layout_marginBottom="10dp"
+         android:gravity="center"
          />
   
  

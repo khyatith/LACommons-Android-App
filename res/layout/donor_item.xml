@@ -134,7 +134,7 @@
         android:textColor="#000"
         android:hint="Contact"/>
 
-	<CheckBox
+<!--  <CheckBox
 	    android:id="@+id/checkBox1"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
@@ -142,7 +142,7 @@
 	    android:textColor="#000"
 	    android:gravity="center"
 	    android:layout_marginBottom="10dp"
-	    android:layout_marginTop="10dp"/>
+	    android:layout_marginTop="10dp"/>-->
 
 
 	
